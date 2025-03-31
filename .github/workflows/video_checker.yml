@@ -32,6 +32,7 @@ jobs:
       run: |
         echo "DJANGO_SETTINGS_MODULE=youtube_automation.settings" >> $GITHUB_ENV
         echo "SLACK_BOT_TOKEN=$SLACK_BOT_TOKEN" >> $GITHUB_ENV
+        echo "G_SCRIPT_URL=$G_SCRIPT_URL" >> $GITHUB_ENV
         
     - name: Run video checker
       run: |
