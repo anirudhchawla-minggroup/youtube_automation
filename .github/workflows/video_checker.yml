@@ -29,6 +29,7 @@ jobs:
     - name: Set environment variables
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        G_SCRIPT_URL: ${{ secrets.G_SCRIPT_URL }}
       run: |
         echo "DJANGO_SETTINGS_MODULE=youtube_automation.settings" >> $GITHUB_ENV
         echo "SLACK_BOT_TOKEN=$SLACK_BOT_TOKEN" >> $GITHUB_ENV
