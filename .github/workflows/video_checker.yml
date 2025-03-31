@@ -1,6 +1,8 @@
 name: YouTube Video Checker
 
 on:
+  push:
+    branches: [main]   # Runs when changes are pushed to main branch.
   schedule:
     # Runs every 4 hours (UTC time)
     - cron: '0 */4 * * *'
@@ -28,7 +30,7 @@ jobs:
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       run: |
-        echo "DJANGO_SETTINGS_MODULE=your_project.settings" >> $GITHUB_ENV
+        echo "DJANGO_SETTINGS_MODULE=youtube_automation.settings" >> $GITHUB_ENV
         echo "SLACK_BOT_TOKEN=$SLACK_BOT_TOKEN" >> $GITHUB_ENV
         
     - name: Run video checker
