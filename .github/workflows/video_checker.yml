@@ -1,0 +1,36 @@
+name: YouTube Video Checker
+
+on:
+  schedule:
+    # Runs every 4 hours (UTC time)
+    - cron: '0 */4 * * *'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  check-videos:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+      
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        
+    - name: Set environment variables
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      run: |
+        echo "DJANGO_SETTINGS_MODULE=your_project.settings" >> $GITHUB_ENV
+        echo "SLACK_BOT_TOKEN=$SLACK_BOT_TOKEN" >> $GITHUB_ENV
+        
+    - name: Run video checker
+      run: |
+        python manage.py new_video_notification_in_slack
