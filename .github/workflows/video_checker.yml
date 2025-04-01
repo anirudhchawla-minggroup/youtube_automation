@@ -25,19 +25,22 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        
+
     - name: Set environment variables
       env:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         G_SCRIPT_URL: ${{ secrets.G_SCRIPT_URL }}
         WEB_APP_URL: ${{ secrets.WEB_APP_URL }}
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        YT_COOKIES: ${{ secrets.YT_COOKIES }}
       run: |
         echo "DJANGO_SETTINGS_MODULE=youtube_automation.settings" >> $GITHUB_ENV
         echo "SLACK_BOT_TOKEN=$SLACK_BOT_TOKEN" >> $GITHUB_ENV
         echo "G_SCRIPT_URL=$G_SCRIPT_URL" >> $GITHUB_ENV
         echo "WEB_APP_URL=$WEB_APP_URL" >> $GITHUB_ENV
         echo "GEMINI_API_KEY=$GEMINI_API_KEY" >> $GITHUB_ENV
+        echo "${{ secrets.YT_COOKIES }}" | base64 --decode > cookies.txt
+        cat cookies.txt | head -n 1 # Verify first line (don't show full content)
         
     - name: Run video checker
       run: |

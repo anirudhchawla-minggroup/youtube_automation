@@ -18,6 +18,7 @@ WEB_APP_URL = os.getenv("WEB_APP_URL")
 
 def download_audio(video_url, output_dir):
     ydl_opts = {
+        'cookiefile': os.getenv('YT_COOKIES'),
         'format': 'bestaudio/best',
         'outtmpl': os.path.join(output_dir, '%(id)s.%(ext)s'),
         'postprocessors': [{
