@@ -4,11 +4,12 @@ import feedparser
 import requests
 from django.core.management.base import BaseCommand
 from dotenv import load_dotenv
+from django.core.management import call_command
 
 load_dotenv()
 # Configuration - Set these in your environment or Django settings
 SLACK_BOT_TOKEN = os.getenv("SLACK_BOT_TOKEN")  # e.g. "xoxb-..."
-SLACK_CHANNEL = "C0845F94RD0"  # Change to your Slack channel ID
+SLACK_CHANNEL = "C07NQ9E7G5S"  # Change to your Slack channel ID
 # Google Apps Script URL for persisting the last video ID
 G_SCRIPT_URL = os.getenv("G_SCRIPT_URL")  # e.g. "https://script.google.com/macros/s/your_deployment_id/exec"
 
@@ -102,8 +103,9 @@ class Command(BaseCommand):
         self.stdout.write(f"Last processed ID: {last_video_id or 'None'}")
         
         # Compare with last processed video
-        if latest_video['id'] != last_video_id:
+        if latest_video['id'] == last_video_id:
             self.stdout.write(self.style.SUCCESS("New video found!"))
+            call_command('transcribe_youtube', f'--video-id={latest_video["id"]}')
             self.send_slack_notification(latest_video)
             self.write_last_video(latest_video['id'])
             self.stdout.write("Notification sent and video ID updated in persistent store")
