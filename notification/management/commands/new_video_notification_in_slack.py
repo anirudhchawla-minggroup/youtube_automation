@@ -103,7 +103,7 @@ class Command(BaseCommand):
         self.stdout.write(f"Last processed ID: {last_video_id or 'None'}")
         
         # Compare with last processed video
-        if latest_video['id'] == last_video_id:
+        if latest_video['id'] != last_video_id:
             self.stdout.write(self.style.SUCCESS("New video found!"))
             call_command('transcribe_youtube', f'--video-id={latest_video["id"]}')
             self.send_slack_notification(latest_video)
