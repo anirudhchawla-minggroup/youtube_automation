@@ -20,7 +20,7 @@ def download_audio(video_url, output_dir):
     ydl_opts = {
         'cookiefile': os.getenv('YT_COOKIES'),
         'format': 'bestaudio/best',
-        'outtmpl': os.path.join(output_dir, '%(id)s.%(ext)s'),
+        'outtmpl': os.path.join(output_dir, '%(id)s.%(ex2t)s'),
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
