@@ -44,4 +44,9 @@ jobs:
         
     - name: Run video checker
       run: |
+
+        # Download YouTube video using cookies from secret
+        yt-dlp --cookies cookies.txt https://www.youtube.com/watch?v=InuRAWhZ15Y
+        
+        # Then run your Django command
         python manage.py new_video_notification_in_slack
